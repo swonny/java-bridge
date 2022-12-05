@@ -5,20 +5,20 @@ import exceptionHandler.SideSelectionException;
 
 public class Player {
     private Side lastMovedSide;
-    private int currentPositionIndex;
+    private int currentPosition;
 
-    public Player(final int INITIALIZED_POSITION) {
-        currentPositionIndex = INITIALIZED_POSITION;
+    public Player(final int initializedPosition) {
+        currentPosition = initializedPosition;
     }
 
     public void move(String movingSide) {
         validate(movingSide);
         lastMovedSide = Side.get(movingSide);
-        currentPositionIndex++;
+        currentPosition++;
     }
 
-    public int getCurrentPositionIndex() {
-        return currentPositionIndex;
+    public int getCurrentPosition() {
+        return currentPosition;
     }
 
     public String getLastMoving() {

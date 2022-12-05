@@ -1,12 +1,8 @@
 package bridge;
 
 import enumCollections.Side;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -20,7 +16,7 @@ class PlayerTest {
     @Test
     public void testInitializePosition() {
         Player player = new Player(INITIALIZED_POSITION);
-        assertThat(player.getCurrentPositionIndex())
+        assertThat(player.getCurrentPosition())
                 .isEqualTo(-1);
     }
 
