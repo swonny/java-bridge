@@ -1,6 +1,8 @@
 package bridge;
 
+import enumCollections.Side;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,22 +17,19 @@ class PlayerTest {
     private static final int INITIALIZED_POSITION = -1;
     Player player;
 
-    @DisplayName("마지막 이동 위치를 가져오는 메소드를 테스트한다.")
-    @CsvSource(value = {"U:U", "D:D"}, delimiter = ':')
-    void player_생성_테스트(String footprint, String expected) {
-        player = new Player(List.of(footprint));
-        assertThat(player.getLastMoving())
-                .isEqualTo(expected);
+    @Test
+    public void testInitializePosition() {
+        Player player = new Player(INITIALIZED_POSITION);
+        assertThat(player.getCurrentPositionIndex())
+                .isEqualTo(-1);
     }
 
-    @DisplayName("사용자 위치 초기화를 테스트한다.")
-    @ParameterizedTest
-    @MethodSource("generateFootprints")
-    void 사용자_위치_초기화_테스트(List<String> footprints) {
-        player = new Player(footprints);
-        player.initializePosition();
-        assertThat(player.getCurrentPosition())
-                .isEqualTo(INITIALIZED_POSITION);
+    @Test
+    public void testMove() {
+        Player player = new Player(INITIALIZED_POSITION);
+        player.move(Side.UP.getBridgeSavingFormat());
+        assertThat(player.getLastMoving())
+                .isEqualTo(Side.UP.getBridgeSavingFormat());
     }
 
     static Stream<Arguments> generateFootprints() {
