@@ -4,18 +4,20 @@ import enumCollections.AvailableInput;
 import enumCollections.GameStatus;
 import enumCollections.Side;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BridgeGame {
     private final int INITIALIZED_TRIAL = 1;
-    private final Player player = new Player(new ArrayList<>());
+    private final int INITIALIZED_PLAYER_POSITION = -1;
     private final Map map = new Map();
+
     private Bridge bridge;
+    private Player player;
     private int trial;
 
     public BridgeGame() {
-        this.trial = INITIALIZED_TRIAL;
+        trial = INITIALIZED_TRIAL;
+        player = new Player(INITIALIZED_PLAYER_POSITION);
     }
 
     public void generateBridge(final int bridgeSize) {
@@ -30,9 +32,9 @@ public class BridgeGame {
     }
 
     public boolean isPlayerInMovableSide() {
-        return this.bridge.isMovableSide(
-                this.player.getLastMoving(),
-                this.player.getCurrentPosition()
+        return bridge.isMovableSide(
+                player.getLastMoving(),
+                player.getCurrentPositionIndex()
         );
     }
 
@@ -46,7 +48,7 @@ public class BridgeGame {
     }
 
     public GameStatus isGameFinished() {
-        if (this.bridge.isLastPosition(this.player.getCurrentPosition())) {
+        if (this.bridge.isLastPosition(this.player.getCurrentPositionIndex())) {
             return GameStatus.SUCCESS;
         }
         return GameStatus.CONTINUE;
@@ -61,8 +63,8 @@ public class BridgeGame {
     }
 
     private void initialize_game() {
-        this.player.initializePosition();
-        this.map.initialize();
+        player = new Player(INITIALIZED_PLAYER_POSITION);
+        map.initialize();
     }
 
     private void updateMap() {

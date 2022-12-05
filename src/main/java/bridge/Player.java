@@ -1,32 +1,28 @@
 package bridge;
 
+import enumCollections.Side;
 import exceptionHandler.SideSelectionException;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Player {
-    private List<String> footprints;
+    private Side lastMovedSide;
+    private int currentPositionIndex;
 
-    public Player(List<String> footprints) {
-        this.footprints = footprints;
+    public Player(final int INITIALIZED_POSITION) {
+        currentPositionIndex = INITIALIZED_POSITION;
     }
 
     public void move(String movingSide) {
         validate(movingSide);
-        footprints.add(movingSide);
+        lastMovedSide = Side.get(movingSide);
+        currentPositionIndex++;
     }
 
-    public int getCurrentPosition() {
-        return this.footprints.size() - 1;
-    }
-
-    public void initializePosition() {
-        this.footprints = new ArrayList<>();
+    public int getCurrentPositionIndex() {
+        return currentPositionIndex;
     }
 
     public String getLastMoving() {
-        return footprints.get(getCurrentPosition());
+        return lastMovedSide.getBridgeSavingFormat();
     }
 
     private void validate(String movableSide) {

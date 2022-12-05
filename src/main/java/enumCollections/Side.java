@@ -45,4 +45,8 @@ public enum Side {
         }
         return UP;
     }
+
+    public String getBridgeSavingFormat() {
+        return this.bridgeSavingFormat;
+    }
 }
