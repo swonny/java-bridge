@@ -34,7 +34,7 @@ public class BridgeGame {
     public boolean isPlayerInMovableSide() {
         return bridge.isMovableSide(
                 player.getLastMoving(),
-                player.getCurrentPositionIndex()
+                player.getCurrentPosition()
         );
     }
 
@@ -48,7 +48,7 @@ public class BridgeGame {
     }
 
     public GameStatus isGameFinished() {
-        if (this.bridge.isLastPosition(this.player.getCurrentPositionIndex())) {
+        if (this.bridge.isLastPosition(this.player.getCurrentPosition())) {
             return GameStatus.SUCCESS;
         }
         return GameStatus.CONTINUE;
