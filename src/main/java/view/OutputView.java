@@ -12,7 +12,18 @@ public class OutputView {
     }
 
     private static void print(GuideMessage message) {
-        System.out.println(message);
+        System.out.println(message.get());
+    }
+
+    public static void printReadBridgeSize() {
+        print(GuideMessage.READ_BRIDE_SIZE);
+    }
+
+    public static void printReadMovingSide() {
+        print(GuideMessage.READ_MOVING_SIDE);
+    }
+
+    public static void printProgress(String bridgeMap) {
     }
 
     /**

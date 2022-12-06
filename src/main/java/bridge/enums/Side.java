@@ -21,6 +21,13 @@ public enum Side {
         return DOWN.bridgeSavingFormat;
     }
 
+    public static Side getBridgeSavingFormat(String side) {
+        if (UP.bridgeSavingFormat.equals(side)) {
+            return Side.UP;
+        }
+        return Side.DOWN;
+    }
+
     public boolean equals(String side) {
         return this.bridgeSavingFormat.equals(side);
     }

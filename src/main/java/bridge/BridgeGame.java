@@ -23,8 +23,8 @@ public class BridgeGame {
         bridge = new Bridge(bridgeMaker.makeBridge(size));
     }
 
-    public void move(Side up) {
-        player.move(up);
+    public void move(String side) {
+        player.move(Side.getBridgeSavingFormat(side));
     }
 
     /**
@@ -60,5 +60,9 @@ public class BridgeGame {
 
     private boolean isPlayerOnMovableSide(int currentPosition, Side movedSide) {
         return bridge.isPlayerOnMovableSide(currentPosition, movedSide);
+    }
+
+    public String getBridgeMap() {
+        return progressBoard.getBridgeMap();
     }
 }

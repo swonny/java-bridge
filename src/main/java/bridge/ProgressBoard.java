@@ -11,6 +11,7 @@ public class ProgressBoard {
 
     public ProgressBoard(int initializedTrial, GameStatus gameStatus) {
         trial = initializedTrial;
+        bridgeMap = new BridgeMap();
         this.gameStatus = gameStatus;
     }
 
@@ -21,5 +22,9 @@ public class ProgressBoard {
 
     private void updateMap(GameStatus gameStatus, Side lastMoving) {
         bridgeMap.add(gameStatus, lastMoving);
+    }
+
+    public String getBridgeMap() {
+        return bridgeMap.getBridgeMap();
     }
 }
