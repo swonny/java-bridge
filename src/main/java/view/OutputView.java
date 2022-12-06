@@ -6,13 +6,10 @@ import view.enums.GuideMessage;
  * 사용자에게 게임 진행 상황과 결과를 출력하는 역할을 한다.
  */
 public class OutputView {
+    private static final String RESULT = "최종 게임 결과";
 
     public static void printStartMessage() {
         print(GuideMessage.START_GAME);
-    }
-
-    private static void print(GuideMessage message) {
-        System.out.println(message.get());
     }
 
     public static void printReadBridgeSize() {
@@ -23,7 +20,8 @@ public class OutputView {
         print(GuideMessage.READ_MOVING_SIDE);
     }
 
-    public static void printProgress(String bridgeMap) {
+    public static void printReadRetry() {
+        print(GuideMessage.READ_RETRY);
     }
 
     /**
@@ -31,7 +29,8 @@ public class OutputView {
      * <p>
      * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
-    public void printMap() {
+    public static void printMap(String bridgeMap) {
+        print(bridgeMap);
     }
 
     /**
@@ -39,6 +38,20 @@ public class OutputView {
      * <p>
      * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
-    public void printResult() {
+    public static void printResult(String result) {
+        print(RESULT);
+        print(result);
+    }
+
+    private static void print(GuideMessage message) {
+        System.out.println(message.get());
+    }
+
+    private static void print(String message) {
+        System.out.println(message);
+    }
+
+    public static void printError(IllegalArgumentException exception) {
+        print(exception.getMessage());
     }
 }

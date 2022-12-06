@@ -22,7 +22,7 @@ class BridgeGameTest {
     @ValueSource(ints = {1, 2, 3, 4, 5})
     public void testMove(int movings) {
         for (int i = 0; i < movings; i++) {
-            bridgeGame.move(Side.DOWN);
+            bridgeGame.move("U");
         }
         assertThat(bridgeGame.getPlayerPosition())
                 .isEqualTo(movings - 1);
@@ -37,5 +37,20 @@ class BridgeGameTest {
     @Test
     public void testUpdateScoreBoard() {
         bridgeGame.updateScoreBoard();
+    }
+
+    @Test
+    public void testGetBridgeMap() {
+        bridgeGame.move("U");
+        bridgeGame.move("D");
+        assertThat(bridgeGame.getBridgeMap()).isEqualTo("a");
+    }
+
+    @Test
+    public void testGetResult() {
+        bridgeGame.makeBridge(3);
+        bridgeGame.move("U");
+        bridgeGame.move("D");
+        assertThat(bridgeGame.getResult()).isEqualTo("a");
     }
 }
