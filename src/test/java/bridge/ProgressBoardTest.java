@@ -9,6 +9,5 @@ class ProgressBoardTest {
     @Test
     public void testUpdate() {
         ProgressBoard progressBoard = new ProgressBoard(-1, GameStatus.CONTINUE);
-//        progressBoard.update(GameStatus.SUCCESS);
     }
 }
