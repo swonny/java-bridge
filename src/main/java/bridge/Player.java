@@ -18,4 +18,8 @@ public class Player {
     public int getCurrentPosition() {
         return currentPosition;
     }
+
+    public Side getLastMoving() {
+        return lastMovedSide;
+    }
 }
