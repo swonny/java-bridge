@@ -2,16 +2,23 @@ package bridge;
 
 import bridge.enums.Side;
 
+import java.util.List;
+
 /**
  * 다리 건너기 게임을 관리하는 클래스
  */
 public class BridgeGame {
     private final int INITIALIZED_POSITION = -1;
-
-    Player player;
+    private Player player;
+    private Bridge bridge;
 
     public BridgeGame() {
         player = new Player(INITIALIZED_POSITION);
+    }
+
+    public void makeBridge(int size) {
+        BridgeMaker bridgeMaker = new BridgeMaker(new BridgeRandomNumberGenerator());
+        bridge = new Bridge(bridgeMaker.makeBridge(size));
     }
 
     /**

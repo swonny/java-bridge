@@ -20,4 +20,11 @@ class BridgeGameTest {
         assertThat(bridgeGame.getPlayerPosition())
                 .isEqualTo(movings - 1);
     }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5})
+    public void testGenerateBridge(int bridgeSize) {
+        BridgeGame bridgeGame = new BridgeGame();
+        bridgeGame.makeBridge(bridgeSize);
+    }
 }
