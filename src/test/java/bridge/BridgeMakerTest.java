@@ -1,19 +1,14 @@
 package bridge;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.util.Lists.newArrayList;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.params.provider.Arguments.of;
 
 class BridgeMakerTest {
 
@@ -26,7 +21,7 @@ class BridgeMakerTest {
         Assertions.assertThat(bridge).containsExactly(bridgeFormat.toArray(new String[0]));
     }
 
-    class TestNumberGenerator implements BridgeNumberGenerator {
+    private static class TestNumberGenerator implements BridgeNumberGenerator {
         List<Integer> numbers;
 
         TestNumberGenerator(List<Integer> numbers) {
