@@ -54,4 +54,7 @@ public class BridgeGame {
         return resultGenerator.get(movingMap.toString(), resultBoard.toString());
     }
 
+    public String getMovingMap() {
+        return movingMap.toString();
+    }
 }

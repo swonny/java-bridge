@@ -139,7 +139,7 @@ public class BridgeMaker {
 
 - [x] 플레이어 객체를 갖는다. (mutable)
 - [x] 다리 객체를 갖는다. (immutable)
-- 진행상황 객체를 갖는다. (mutable)
+- [x] 진행상황 객체를 갖는다. (mutable)
 
 [행동]
 
@@ -183,7 +183,6 @@ public class BridgeGame {
   - [x] 실패한 경우 실패로 업데이트한다.
   - [x] 성공한 경우 성공을 업데이트한다.
   - [x] 진행상황 Map을 업데이트한다.
-
 
 ### 게임 진행 관리 컨트롤러 - BridgeController
 
@@ -229,4 +228,37 @@ public class BridgeMaker {
 
 ### 다리 UI - BridgeMap
 
--
+---
+### 게임 진행 순서 (Controller)
+
+1. 게임 시작
+2. 다리 게임 시작 안내 문구 출력 `BridgeController`
+3. 다리 길이 입력 `InputView`
+    1. 다리 길이 입력 안내 문구 출력 `OutputView`
+    2. 다리 길이 입력 `InputView`
+        1. 다리 길이 유효성 검사 `InputView`
+    3. 다리 길이 입력 예외 발생 시 3번으로 회귀 `BridgeGame`
+    4. 다리 생성 `BridgeMaker`
+4. 이동할 칸 입력 `BridgeController`
+    1. 이동할 칸 입력 안내 문구 출력 `OutputView`
+    2. 이동할 칸 입력 `InputView`
+        1. 이동할 칸 입력 유효성 검사 `InputView`
+    3. 이동할 칸 입력 예외 발생 시 4번으로 회귀 `BridgeController`
+    4. 사용자 위치 이동 (`BridgeGame`, `Player`)
+5. 진행 상황 출력 (`View`)
+    - 다리 UI 출력
+6. 실패 여부 판단 (`BridgeGame`) - `ProgressBoard`
+    1. 실패했다면
+        1. 재시도 여부 입력 안내 문구 출력
+        2. 재시도 여부 입력 - `Controller`
+        3. 재시도 유효성 검사
+            1. 재시도 유효성검사 실패 시 6번으로 이동
+        4. 재시도 : 4번 이동
+        5. 종료 : 8번 이동
+7. 종료 여부 판단 - `Controller`
+    1. 종료 : 9번 이동
+    2. continue : 4번 이동
+8. 결과 출력
+    1. 최종 게임 결과 UI
+    2. 게임 성공 여부
+    3. 총 시도 횟수

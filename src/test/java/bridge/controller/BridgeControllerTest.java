@@ -21,6 +21,17 @@ class BridgeControllerTest extends NsTest {
         }, 1, 0, 1, 0);
     }
 
+    @Test
+    public void testWillTry() {
+        assertRandomNumberInRangeTest(() -> {
+            run("4", "U", "D", "U", "U", "R");
+            assertThat(output()).contains(
+                    "[ O |   | O | X ]",
+                    "[   | O |   |   ]"
+            );
+        }, 1, 0, 1, 1);
+    }
+
     @Override
     public void runMain() {
         bridgeController.startGame();
