@@ -1,12 +1,10 @@
 package bridge;
 
 import bridge.enums.GameStatus;
-import bridge.enums.Side;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -33,18 +31,17 @@ class ResultBoardTest {
     }
 
     @Test
-    public void testGetBridgeMap() {
-//        ResultBoard resultBoard = new ResultBoard(-1, GameStatus.CONTINUE);
-//        resultBoard.updateResult(GameStatus.CONTINUE, Side.UP);
-//        resultBoard.updateResult(GameStatus.CONTINUE, Side.UP);
-//        assertThat(resultBoard.getBridgeMap()).isEqualTo("a");
+    public void testRetry_성공여부테스트() {
+        resultBoard.updateResult(GameStatus.FAIL);
+        assertThat(resultBoard.toString()).contains("실패");
+        resultBoard.retry();
+        assertThat(resultBoard.toString()).doesNotContain("실패");
     }
 
     @Test
-    public void testGetResult() {
-//        ResultBoard resultBoard = new ResultBoard(1, GameStatus.CONTINUE);
-//        resultBoard.updateResult(GameStatus.CONTINUE, Side.UP);
-//        resultBoard.updateResult(GameStatus.CONTINUE, Side.UP);
-//        assertThat(resultBoard.getResult()).isEqualTo("a");
+    public void testRetry_시도횟수테스트() {
+        assertThat(resultBoard.toString()).contains("총 시도한 횟수: 1");
+        resultBoard.retry();
+        assertThat(resultBoard.toString()).contains("총 시도한 횟수: 2");
     }
 }
