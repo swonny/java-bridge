@@ -10,15 +10,15 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.util.Lists.newArrayList;
 
-class BridgeMakerTest {
+class BridgeTestMakerTest {
 
     @ParameterizedTest
     @MethodSource("generateTestNumbers")
-    public void testMakeBridge(List<Integer> bridgeNumbers, List<String> bridgeFormat) {
+    public void testMakeBridge(List<Integer> bridgeNumbers, List<String> expected) {
         BridgeNumberGenerator bridgeNumberGenerator = new TestNumberGenerator(bridgeNumbers);
         BridgeMaker bridgeMaker = new BridgeMaker(bridgeNumberGenerator);
         List<String> bridge = bridgeMaker.makeBridge(bridgeNumbers.size());
-        Assertions.assertThat(bridge).containsExactly(bridgeFormat.toArray(new String[0]));
+        Assertions.assertThat(bridge).containsExactly(expected.toArray(new String[0]));
     }
 
     private static class TestNumberGenerator implements BridgeNumberGenerator {

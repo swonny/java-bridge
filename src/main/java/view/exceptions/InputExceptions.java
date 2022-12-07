@@ -1,6 +1,5 @@
 package view.exceptions;
 
-import bridge.enums.Side;
 import view.exceptions.enums.Exceptions;
 
 public class InputExceptions {

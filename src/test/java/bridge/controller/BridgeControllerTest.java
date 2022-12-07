@@ -1,14 +1,28 @@
 package bridge.controller;
 
 import bridge.BridgeGame;
+import camp.nextstep.edu.missionutils.test.NsTest;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomNumberInRangeTest;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class BridgeControllerTest {
+class BridgeControllerTest extends NsTest {
+    BridgeController bridgeController = new BridgeController(new BridgeGame());
+
     @Test
     public void testStartGame() {
-        BridgeController bridgeController = new BridgeController(new BridgeGame());
+        assertRandomNumberInRangeTest(() -> {
+            run("4", "U", "D", "U", "D");
+            assertThat(output()).contains(
+                    "[ O |   | O |   ]",
+                    "[   | O |   | O ]"
+            );
+        }, 1, 0, 1, 0);
+    }
+
+    @Override
+    public void runMain() {
         bridgeController.startGame();
     }
 }

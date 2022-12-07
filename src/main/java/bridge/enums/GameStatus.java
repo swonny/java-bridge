@@ -5,8 +5,8 @@ public enum GameStatus {
     FAIL("X", "실패"),
     SUCCESS("O", "성공");
 
-    private String symbol;
-    private String printFormat;
+    private final String symbol;
+    private final String printFormat;
 
     GameStatus(String symbol, String printFormat) {
         this.symbol = symbol;

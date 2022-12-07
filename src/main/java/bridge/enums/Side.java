@@ -4,9 +4,9 @@ public enum Side {
     UP(1, "U", 0),
     DOWN(2, "D", 1);
 
-    private int matchingRandomNumber;
-    private String bridgeSavingFormat;
-    private int bridgeMapIndex;
+    private final int matchingRandomNumber;
+    private final String bridgeSavingFormat;
+    private final int bridgeMapIndex;
 
     Side(int matchingRandomNumber, String bridgeSavingFormat, int bridgeMapIndex) {
         this.matchingRandomNumber = matchingRandomNumber;
@@ -41,5 +41,10 @@ public enum Side {
 
     public int getBridgeMapIndex() {
         return this.bridgeMapIndex;
+    }
+
+    @Override
+    public String toString() {
+        return this.bridgeSavingFormat;
     }
 }

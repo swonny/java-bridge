@@ -1,15 +1,15 @@
 package bridge.controller;
 
 import bridge.BridgeGame;
+import bridge.ResultGenerator;
 import bridge.enums.GameStatus;
 import view.InputView;
 import view.OutputView;
 
 public class BridgeController {
-    private final String QUIT = "Q";
     private final String RESTART = "R";
 
-    private BridgeGame bridgeGame;
+    private final BridgeGame bridgeGame;
 
     public BridgeController(BridgeGame bridgeGame) {
         this.bridgeGame = bridgeGame;
@@ -24,39 +24,40 @@ public class BridgeController {
             }
             bridgeGame.retry();
         }
-        printResult();
-    }
-
-    private void printResult() {
-        OutputView.printResult(bridgeGame.getResult());
     }
 
     private boolean isRetry(String gameCommand) {
         return gameCommand.equals(RESTART);
     }
 
-    private String readGameCommand() {
+    private void playRound(GameStatus gameStatus) {
+        while (!bridgeGame.isWin()) {
+            movePlayer();
+//            printProgress();
+            if (bridgeGame.isFailure()) {
+                askRetry();
+            }
+        }
+        printResult(bridgeGame.getFinalResult(new ResultGenerator()));
+    }
+
+    private void printResult(String result) {
+        OutputView.printResult(bridgeGame.toString());
+    }
+
+    private boolean askRetry() {
         OutputView.printReadRetry();
         try {
-            return InputView.readGameCommand();
+            return InputView.readGameCommand().equals(RESTART);
         } catch (IllegalArgumentException exception) {
             OutputView.printError(exception);
-            return readGameCommand();
+            return askRetry();
         }
     }
 
-    private GameStatus playRound(GameStatus gameStatus) {
-        while (gameStatus == GameStatus.CONTINUE) {
-            readMovingSide();
-            printProgress();
-            gameStatus = bridgeGame.getGameStatus();
-        }
-        return bridgeGame.getGameStatus();
-    }
-
-    private void printProgress() {
-        OutputView.printMap(bridgeGame.getBridgeMap());
-    }
+//    private void printProgress() {
+//        OutputView.printMap(bridgeGame.getBridgeMap());
+//    }
 
     private void readBridgeSize() {
         OutputView.printReadBridgeSize();
@@ -68,14 +69,13 @@ public class BridgeController {
         }
     }
 
-    private void readMovingSide() {
+    private void movePlayer() {
         OutputView.printReadMovingSide();
         try {
             bridgeGame.move(InputView.readMoving());
         } catch (IllegalArgumentException exception) {
             OutputView.printError(exception);
-            readMovingSide();
+            movePlayer();
         }
-
     }
 }

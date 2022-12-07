@@ -1,7 +1,6 @@
 package bridge;
 
 import bridge.enums.GameStatus;
-import bridge.enums.Side;
 
 public class ResultBoard {
     private final String NEW_LINE = "\n";
@@ -19,12 +18,11 @@ public class ResultBoard {
     public void updateResult(GameStatus gameStatus) {
         this.gameStatus = gameStatus;
         // TODO : BridgeMap 업데이트 필요
-//        updateMap(gameStatus, lastMoving);
     }
 
     public void retry() {
         addTrial();
-        gameStatus = GameStatus.CONTINUE;
+        gameStatus = GameStatus.SUCCESS;
     }
 
     private void addTrial() {
@@ -39,7 +37,7 @@ public class ResultBoard {
                 .append(gameStatus.getPrintFormat())
                 .append(NEW_LINE)
                 .append(TRIAL)
-                .append(Integer.toString(trial))
+                .append(trial)
                 .toString();
     }
 }
