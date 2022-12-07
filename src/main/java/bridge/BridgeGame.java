@@ -3,19 +3,19 @@ package bridge;
 import bridge.enums.GameStatus;
 import bridge.enums.Side;
 
-/**
- * 다리 건너기 게임을 관리하는 클래스
- */
 public class BridgeGame {
     private final int INITIALIZED_POSITION = -1;
     private final int INITIALIZED_TRIAL = 1;
-    private ProgressBoard progressBoard;
+
+    private final ResultBoard resultBoard;
+    private MovingMap movingMap;
     private Player player;
     private Bridge bridge;
 
     public BridgeGame() {
         player = new Player(INITIALIZED_POSITION);
-        progressBoard = new ProgressBoard(INITIALIZED_TRIAL, GameStatus.CONTINUE);
+        movingMap = new MovingMap();
+        resultBoard = new ResultBoard(INITIALIZED_TRIAL, GameStatus.CONTINUE);
     }
 
     public void makeBridge(int size) {
@@ -25,46 +25,33 @@ public class BridgeGame {
 
     public void move(String side) {
         player.move(Side.getBridgeSavingFormat(side));
-        updateScoreBoard();
+        resultBoard.updateResult(getGameStatus());
+        movingMap.add(getGameStatus(), Side.getBridgeSavingFormat(side));
     }
 
     public void retry() {
         player = new Player(INITIALIZED_POSITION);
-        progressBoard.retry();
+        resultBoard.retry();
+        movingMap = new MovingMap();
     }
 
-    public int getPlayerPosition() {
-        return player.getCurrentPosition();
+    public boolean isWin() {
+        return bridge.isLastPosition(player.getCurrentPosition());
     }
 
-    public void updateScoreBoard() {
-        progressBoard.update(getGameStatus(), player.getLastMoving());
+    public boolean isFailure() {
+        return bridge.isPlayerOnMovableSide(player.getCurrentPosition(), player.getLastMoving());
     }
 
-    public GameStatus getGameStatus() {
-        if (!isPlayerOnMovableSide(player.getCurrentPosition(), player.getLastMoving())) {
+    private GameStatus getGameStatus() {
+        if (isFailure()) {
             return GameStatus.FAIL;
         }
-        // TODO : 네이밍 is~ 보다 자연스러운 거 찾기
-        return isGameFinished();
+        return GameStatus.SUCCESS;
     }
 
-    private GameStatus isGameFinished() {
-        if (bridge.isLastPosition(player.getCurrentPosition())) {
-            return GameStatus.SUCCESS;
-        }
-        return GameStatus.CONTINUE;
+    public String getFinalResult(ResultGenerator resultGenerator) {
+        return resultGenerator.get(movingMap.toString(), resultBoard.toString());
     }
 
-    private boolean isPlayerOnMovableSide(int currentPosition, Side movedSide) {
-        return bridge.isPlayerOnMovableSide(currentPosition, movedSide);
-    }
-
-    public String getBridgeMap() {
-        return progressBoard.getBridgeMap();
-    }
-
-    public String getResult() {
-        return progressBoard.getResult();
-    }
 }
