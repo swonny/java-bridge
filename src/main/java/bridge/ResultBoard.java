@@ -17,7 +17,6 @@ public class ResultBoard {
 
     public void updateResult(GameStatus gameStatus) {
         this.gameStatus = gameStatus;
-        // TODO : BridgeMap 업데이트 필요
     }
 
     public void retry() {
