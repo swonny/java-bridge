@@ -7,21 +7,15 @@ import constant.Side;
  */
 public class BridgeGame {
 
+    private static final int INITIALIZED_POSITION_INDEX = -1;
     private final Bridge bridge;
     private int positionIndex;
 
     public BridgeGame(Bridge bridge) {
         this.bridge = bridge;
-        this.positionIndex = -1;
+        this.positionIndex = INITIALIZED_POSITION_INDEX;
     }
 
-    /**
-     * 사용자가 칸을 이동할 때 사용하는 메서드
-     * <p>
-     * 이동을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     *
-     * @return
-     */
     public boolean move(Side side) {
         movePositionIndex();
         return bridge.isAvailableToMove(side, positionIndex);
@@ -31,16 +25,11 @@ public class BridgeGame {
         positionIndex++;
     }
 
-    /**
-     * 사용자가 게임을 다시 시도할 때 사용하는 메서드
-     * <p>
-     * 재시작을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     */
     public void retry() {
+        positionIndex = INITIALIZED_POSITION_INDEX;
     }
 
-    public boolean isWin() {
-        // TODO : return값 변경
-        return false;
+    public boolean isFinished() {
+        return bridge.isOnLastIndex(positionIndex);
     }
 }

@@ -22,7 +22,6 @@ public class GameController {
         Bridge bridge = makeBridge();
         this.bridgeGame = new BridgeGame(bridge);
         startBridgeGame();
-        printFinalResult();
     }
 
     private void printFinalResult() {
@@ -31,27 +30,25 @@ public class GameController {
     }
 
     private void startBridgeGame() {
+        ResultRepository.initialize();
+        startRound();
+        if (ResultRepository.isFail() && RetryCommand.RETRY.equals(getRetryCommand(InputView.readRetryCommand()))) {
+            ResultRepository.retry();
+            bridgeGame.retry();
+            startRound();
+        }
+        printFinalResult();
+    }
+
+    private void startRound() {
         Side movingSide = getMovingSide(InputView.readMovingSide());
         boolean movedSuccessfully = bridgeGame.move(movingSide);
         ResultRepository.updateResult(movedSuccessfully, movingSide);
         OutputView.printResultMap(ResultRepository.getResultMap());
-        if (movedSuccessfully && RetryCommand.QUIT.equals(getRetryCommand(InputView.readRetryCommand()))) {
+        if (!movedSuccessfully || bridgeGame.isFinished()) {
             return;
         }
-        if (bridgeGame.isWin()) {
-            return;
-        }
-        startBridgeGame();
-    }
-
-    private boolean isGameFinished(boolean movedSuccessfully) {
-        // TODO : 로직 정리하기
-        // 게임이 졌는데 재시도 안한다면 끝 | 게임이 졌는데, 재시도 하면 초기화해야함
-        if (!movedSuccessfully && RetryCommand.QUIT.equals(getRetryCommand(InputView.readRetryCommand()))) {
-            return true;
-        }
-        // 게임이 안 졌는지
-        return bridgeGame.isWin();
+        startRound();
     }
 
     private RetryCommand getRetryCommand(String input) {

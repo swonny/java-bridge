@@ -1,6 +1,7 @@
 package constant;
 
 import java.util.Arrays;
+import java.util.List;
 
 public enum Side {
     UP("U", 0, 1),
@@ -37,5 +38,12 @@ public enum Side {
 
     public int getMapIndex() {
         return this.mapIndex;
+    }
+
+    public Side getOppositeSide() {
+        if (this.equals(UP)) {
+            return DOWN;
+        }
+        return UP;
     }
 }

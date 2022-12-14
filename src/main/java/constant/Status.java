@@ -1,20 +1,23 @@
 package constant;
 
 public enum Status {
-    EMPTY(" ", ""), // 성공도, 실패도 아닌 경우
-    SUCCESS("O", "성공"),
-    FAIL("X", "실패");
+    CONTINUE("", true),
+    SUCCESS("성공", true),
+    FAIL("실패", false);
 
-    private final String view;
     private final String statusName;
+    private final boolean isSuccess;
 
-    Status(String view, String statusName) {
-        this.view = view;
+    Status(String statusName, boolean isSuccess) {
         this.statusName = statusName;
+        this.isSuccess = isSuccess;
     }
 
-    public String getView() {
-        return this.view;
+    public static Status getStatus(boolean movedSuccessfully) {
+        if (movedSuccessfully) {
+            return SUCCESS;
+        }
+        return FAIL;
     }
 
     public String getStatusName() {

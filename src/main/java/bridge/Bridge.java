@@ -15,4 +15,8 @@ public class Bridge {
     public boolean isAvailableToMove(Side side, int positionIndex) {
         return availableSide.get(positionIndex).equals(side);
     }
+
+    public boolean isOnLastIndex(int positionIndex) {
+        return availableSide.size() - 1 == positionIndex;
+    }
 }

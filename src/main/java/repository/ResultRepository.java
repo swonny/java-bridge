@@ -3,33 +3,63 @@ package repository;
 import constant.Side;
 import constant.Status;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ResultRepository {
-    // TODO : 게임 성공, 실패, 진행중 저장하기
-    // TODO : Status로 저장, 출력 시 더 편함, 저장도 편함.
-    private static final List<List<Side>> resultMap = new ArrayList<>();
-    private static int trial;
+    private static final String EMPTY = " ";
+    private static final String MOVE_SUCCESSFULLY = "O";
+    private static final String MOVE_FAILED = "X";
+    private static final EnumMap<Side, List<String>> resultMap = new EnumMap<>(Side.class);
+    private static int trial = 0;
+    private static Status status;
+
 
     public static void updateResult(boolean movedSuccessfully, Side movingSide) {
-        // TODO : 결과 업데이트하기
+        if (!movedSuccessfully) {
+            status = Status.FAIL;
+        }
+        String movingSymbol = getMovingSymbol(movedSuccessfully);
+        resultMap.get(movingSide).add(movingSymbol);
+        resultMap.get(movingSide.getOppositeSide()).add(EMPTY);
     }
 
-    public static List<List<Status>> getResultMap() {
-        // TODO : 결과 반환하기
-        return Collections.EMPTY_LIST;
+    private static String getMovingSymbol(boolean movedSuccessfully) {
+        if (movedSuccessfully) {
+            return MOVE_SUCCESSFULLY;
+        }
+        return MOVE_FAILED;
+    }
+
+    public static EnumMap<Side, List<String>> getResultMap() {
+        return resultMap;
     }
 
     public static Status getStatus() {
-        // TODO : 결과 반환하기
-        return null;
+        return status;
     }
-
 
     public static int getTrial() {
         return trial;
+    }
+
+    private static void addTrial() {
+        trial++;
+    }
+
+    public static boolean isFail() {
+        return Status.FAIL.equals(status);
+    }
+
+    public static void retry() {
+        addTrial();
+        resultMap.clear();
+        initialize();
+    }
+
+    public static void initialize() {
+        addTrial();
+        status = Status.CONTINUE;
+        resultMap.put(Side.UP, new ArrayList<>());
+        resultMap.put(Side.DOWN, new ArrayList<>());
     }
 }
