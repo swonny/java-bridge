@@ -25,7 +25,6 @@ public class OutputView {
 
     public static void printReadingBridgeSize() {
         printLine(READ_BRIDGE_SIZE);
-        printNewLine();
     }
 
     public static void printExceptionMessage(Exception exception) {

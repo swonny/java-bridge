@@ -62,4 +62,8 @@ public class ResultRepository {
         resultMap.put(Side.UP, new ArrayList<>());
         resultMap.put(Side.DOWN, new ArrayList<>());
     }
+
+    public static void updateStatus(Status newStatus) {
+        status = newStatus;
+    }
 }

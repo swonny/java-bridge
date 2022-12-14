@@ -10,7 +10,6 @@ public class Bridge {
     private final List<Side> availableSide;
 
     public Bridge(List<Side> availableSide) {
-        // TODO : validateSize 메소드추가
         validate(availableSide);
         this.availableSide = availableSide;
     }

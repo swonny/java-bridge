@@ -6,6 +6,7 @@ import bridge.BridgeMaker;
 import bridge.BridgeRandomNumberGenerator;
 import constant.RetryCommand;
 import constant.Side;
+import constant.Status;
 import repository.ResultRepository;
 import view.InputView;
 import view.OutputView;
@@ -21,23 +22,18 @@ public class GameController {
         OutputView.printStartGame();
         Bridge bridge = generateBridge(new BridgeMaker(new BridgeRandomNumberGenerator()));
         this.bridgeGame = new BridgeGame(bridge);
+        ResultRepository.initialize();
         startBridgeGame();
-    }
-
-    private void printFinalResult() {
-        OutputView.printFinalMap(ResultRepository.getResultMap());
-        OutputView.printStatus(ResultRepository.getStatus(), ResultRepository.getTrial());
+        printFinalResult();
     }
 
     private void startBridgeGame() {
-        ResultRepository.initialize();
         startRound();
         if (ResultRepository.isFail() && RetryCommand.RETRY.equals(getRetryCommand(InputView.readRetryCommand()))) {
             ResultRepository.retry();
             bridgeGame.retry();
-            startRound();
+            startBridgeGame();
         }
-        printFinalResult();
     }
 
     private void startRound() {
@@ -45,10 +41,18 @@ public class GameController {
         boolean movedSuccessfully = bridgeGame.move(movingSide);
         ResultRepository.updateResult(movedSuccessfully, movingSide);
         OutputView.printResultMap(ResultRepository.getResultMap());
-        if (!movedSuccessfully || bridgeGame.isFinished()) {
+        if (!movedSuccessfully || isFinished()) {
             return;
         }
         startRound();
+    }
+
+    private boolean isFinished() {
+        if (bridgeGame.isFinished()) {
+            ResultRepository.updateStatus(Status.SUCCESS);
+            return true;
+        }
+        return false;
     }
 
     private RetryCommand getRetryCommand(String input) {
@@ -94,5 +98,10 @@ public class GameController {
         }
         OutputView.printExceptionMessage(new IllegalArgumentException("숫자를 입력해주세요."));
         return getBridgeSize(InputView.readBridgeSize());
+    }
+
+    private void printFinalResult() {
+        OutputView.printFinalMap(ResultRepository.getResultMap());
+        OutputView.printStatus(ResultRepository.getStatus(), ResultRepository.getTrial());
     }
 }
