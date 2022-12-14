@@ -19,7 +19,7 @@ public class GameController {
 
     public void run() {
         OutputView.printStartGame();
-        Bridge bridge = makeBridge();
+        Bridge bridge = generateBridge(new BridgeMaker(new BridgeRandomNumberGenerator()));
         this.bridgeGame = new BridgeGame(bridge);
         startBridgeGame();
     }
@@ -69,23 +69,16 @@ public class GameController {
         }
     }
 
-    private Bridge makeBridge() {
-        // TODO : size ~ generate를 tryCatch하면 됨
-        int bridgeSize = getBridgeSize(InputView.readBridgeSize());
-        Bridge bridge = generateBridge(new BridgeMaker(new BridgeRandomNumberGenerator()), bridgeSize);
-        return bridge;
-    }
-
-    private Bridge generateBridge(BridgeMaker bridgeMaker, int bridgeSize) {
+    private Bridge generateBridge(BridgeMaker bridgeMaker) {
         try {
+            int bridgeSize = getBridgeSize(InputView.readBridgeSize());
             List<String> availableSideName = bridgeMaker.makeBridge(bridgeSize);
             List<Side> availableSide = getBridgeSide(availableSideName);
             return new Bridge(availableSide);
         } catch (IllegalArgumentException exception) {
             OutputView.printExceptionMessage(exception);
             // TODO : 브릿지 makeBridge()에서 숫자 유효성 & 길이 유효성 트라ㅋㅐ치 한번에 처리하기
-            // TODO : return값 변경
-            return null;
+            return generateBridge(bridgeMaker);
         }
     }
 
