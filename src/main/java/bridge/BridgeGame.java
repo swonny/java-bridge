@@ -8,9 +8,11 @@ import constant.Side;
 public class BridgeGame {
 
     private final Bridge bridge;
+    private int positionIndex;
 
     public BridgeGame(Bridge bridge) {
         this.bridge = bridge;
+        this.positionIndex = -1;
     }
 
     /**
@@ -20,8 +22,13 @@ public class BridgeGame {
      *
      * @return
      */
-    public boolean move(Side side, int positionIndex) {
+    public boolean move(Side side) {
+        movePositionIndex();
         return bridge.isAvailableToMove(side, positionIndex);
+    }
+
+    private void movePositionIndex() {
+        positionIndex++;
     }
 
     /**
