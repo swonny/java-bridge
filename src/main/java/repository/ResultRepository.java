@@ -51,7 +51,6 @@ public class ResultRepository {
     }
 
     public static void retry() {
-        addTrial();
         resultMap.clear();
         initialize();
     }
