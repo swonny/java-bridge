@@ -2,11 +2,16 @@ package controller;
 
 import bridge.Bridge;
 import bridge.BridgeGame;
+import bridge.BridgeMaker;
+import bridge.BridgeRandomNumberGenerator;
 import constant.RetryCommand;
 import constant.Side;
 import repository.ResultRepository;
 import view.InputView;
 import view.OutputView;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameController {
 
@@ -70,18 +75,27 @@ public class GameController {
     private Bridge makeBridge() {
         // TODO : size ~ generate를 tryCatch하면 됨
         int bridgeSize = getBridgeSize(InputView.readBridgeSize());
-        Bridge bridge = generateBridge(bridgeSize);
+        Bridge bridge = generateBridge(new BridgeMaker(new BridgeRandomNumberGenerator()), bridgeSize);
         return bridge;
     }
 
-    private Bridge generateBridge(int bridgeSize) {
+    private Bridge generateBridge(BridgeMaker bridgeMaker, int bridgeSize) {
         try {
-            return new Bridge(bridgeSize);
+            List<String> availableSideName = bridgeMaker.makeBridge(bridgeSize);
+            List<Side> availableSide = getBridgeSide(availableSideName);
+            return new Bridge(availableSide);
         } catch (IllegalArgumentException exception) {
             OutputView.printExceptionMessage(exception);
             // TODO : 브릿지 makeBridge()에서 숫자 유효성 & 길이 유효성 트라ㅋㅐ치 한번에 처리하기
-            return new Bridge(getBridgeSize(InputView.readBridgeSize()));
+            // TODO : return값 변경
+            return null;
         }
+    }
+
+    private List<Side> getBridgeSide(List<String> availableSideName) {
+        return availableSideName.stream()
+                .map(side -> Side.getSideBySideName(side))
+                .collect(Collectors.toList());
     }
 
     private int getBridgeSize(String bridgeSize) {

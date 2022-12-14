@@ -20,9 +20,8 @@ public class BridgeGame {
      *
      * @return
      */
-    public boolean move(Side side) {
-        // TODO : return값 변경
-        return false;
+    public boolean move(Side side, int positionIndex) {
+        return bridge.isAvailableToMove(side, positionIndex);
     }
 
     /**
