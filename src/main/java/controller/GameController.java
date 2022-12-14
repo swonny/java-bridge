@@ -81,7 +81,6 @@ public class GameController {
             return new Bridge(availableSide);
         } catch (IllegalArgumentException exception) {
             OutputView.printExceptionMessage(exception);
-            // TODO : 브릿지 makeBridge()에서 숫자 유효성 & 길이 유효성 트라ㅋㅐ치 한번에 처리하기
             return generateBridge(bridgeMaker);
         }
     }

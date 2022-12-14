@@ -46,10 +46,8 @@ public class OutputView {
 
     public static void printResultMap(EnumMap<Side, List<String>> resultMap) {
         // TODO: 메소드 분리해보기 & 출력 형식 status/side/String 중에 결정해야함
-        List<String> upResult = resultMap.get(Side.UP).stream()
-                .collect(Collectors.toList());
-        List<String> downResult = resultMap.get(Side.DOWN).stream()
-                .collect(Collectors.toList());
+        List<String> upResult = resultMap.get(Side.UP);
+        List<String> downResult = resultMap.get(Side.DOWN);
         printMap(upResult);
         printMap(downResult);
         printNewLine();

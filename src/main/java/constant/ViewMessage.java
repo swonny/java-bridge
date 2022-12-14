@@ -12,5 +12,3 @@ public class ViewMessage {
     public static final String FINAL_STATUS = "게임 성공 여부: ";
     public static final String TRIAL_COUNT = "총 시도한 횟수: ";
 }
-
-
