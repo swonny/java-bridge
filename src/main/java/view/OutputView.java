@@ -1,5 +1,7 @@
 package view;
 
+import java.util.List;
+
 import static constant.ViewMessage.*;
 
 public class OutputView {
@@ -47,4 +49,27 @@ public class OutputView {
     public void printResult() {
     }
 
+    public void printStartMessage() {
+        println(GAME_START_MESSAGE);
+    }
+
+    public void printReadingBridgeSize() {
+        println(READ_BRIDGE_SIZE);
+    }
+
+    public void printFinalResult(List<String> finalResult) {
+        // TODO : 최종 결과 출력 기능 구현 : 어떤 데이터 자료형을 넘겨줄지 생각해뵤기
+        println(FINAL_RESULT_TITLE);
+        // TODO : 브릿지 출력
+        // TODO : 성고/실패 여부 출력
+        // TODO : 시도횟수 출력
+    }
+
+    public void printReadMoving() {
+        println(READ_MOVING_SIDE);
+    }
+
+    public void printReadingCommand() {
+        println(READ_RETRY_COMMAND);
+    }
 }

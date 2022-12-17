@@ -3,28 +3,28 @@ package view;
 import camp.nextstep.edu.missionutils.Console;
 
 public class InputView {
+    private final OutputView outputView;
+
+    public InputView(OutputView outputView) {
+        this.outputView = outputView;
+    }
+
     private String read() {
         return Console.readLine();
     }
 
-    /**
-     * 다리의 길이를 입력받는다.
-     */
-    public int readBridgeSize() {
-        return 0;
+    public String readBridgeSize() {
+        outputView.printReadingBridgeSize();
+        return read();
     }
 
-    /**
-     * 사용자가 이동할 칸을 입력받는다.
-     */
     public String readMoving() {
-        return null;
+        outputView.printReadMoving();
+        return read();
     }
 
-    /**
-     * 사용자가 게임을 다시 시도할지 종료할지 여부를 입력받는다.
-     */
     public String readGameCommand() {
-        return null;
+        outputView.printReadingCommand();
+        return read();
     }
 }
